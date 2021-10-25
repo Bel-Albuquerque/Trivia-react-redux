@@ -48,10 +48,7 @@ class Login extends React.Component {
       score,
       gravatarEmail: email,
     };
-    const state = {
-      player,
-    };
-    localStorage.setItem('state', JSON.stringify(state));
+    localStorage.setItem('player', JSON.stringify(player));
   }
 
   render() {

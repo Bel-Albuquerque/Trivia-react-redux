@@ -71,10 +71,7 @@ class Game extends Component {
         score,
         gravatarEmail: email,
       };
-      const state = {
-        player,
-      };
-      localStorage.setItem('state', JSON.stringify(state));
+      localStorage.setItem('state', JSON.stringify(player));
     }
     if (target.className === 'correct') {
       const player = JSON.parse(localStorage.getItem('player'));
@@ -87,7 +84,7 @@ class Game extends Component {
       const state = {
         player: newPlayer,
       };
-      localStorage.setItem('state', JSON.stringify(state));
+      localStorage.setItem('player', JSON.stringify(newPlayer));
     }
   }
 
@@ -153,6 +150,13 @@ class Game extends Component {
         game
         { console.log(request)}
         {request && this.renderCardQuestion()}
+        <button
+          type="button"
+          data-testid="btn-next"
+          disabled="false"
+        >
+          Próxima
+        </button>
       </div>
     );
   }
