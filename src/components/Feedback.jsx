@@ -12,8 +12,7 @@ class Feedback extends Component {
 
     this.getLocalStorage = this.getLocalStorage.bind(this);
     this.handlePage = this.handlePage.bind(this);
-
-
+    this.handlePageRanking = this.handlePageRanking.bind(this);
   }
 
   componentDidMount() {
@@ -28,10 +27,14 @@ class Feedback extends Component {
     });
   }
 
-
   handlePage() {
     const { history } = this.props;
     history.push('/');
+  }
+
+  handlePageRanking() {
+    const { history } = this.props;
+    history.push('/ranking');
   }
 
   render() {
@@ -55,6 +58,13 @@ class Feedback extends Component {
             onClick={ this.handlePage }
           >
             Jogar novamente
+          </button>
+          <button
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ this.handlePageRanking }
+          >
+            Ver Ranking
           </button>
         </main>
       </>
