@@ -14,8 +14,8 @@ class Game extends Component {
       disabled: false,
       time: 0,
       respostas: [],
+      nextQuestion: true,
     };
-    // nextQuestion: false,
 
     this.renderCardQuestion = this.renderCardQuestion.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -41,13 +41,20 @@ class Game extends Component {
   }
 
   handleNextQuestion() {
+    const MAX_ARRAY = 4;
     const { idx } = this.state;
+    const { history } = this.props;
+
+    if (idx === MAX_ARRAY) {
+      return history.push('/feedback');
+    }
+    this.setState({ nextQuestion: false });
     this.setState({
       idx: idx + 1,
       stopTimer: false,
       toggle: false,
       disabled: false,
-    });
+    }, () => this.setState({ nextQuestion: true }));
   }
 
   addTime(time) {
@@ -171,16 +178,16 @@ class Game extends Component {
   }
 
   render() {
-    const { stopTimer, respostas } = this.state;
+    const { stopTimer, respostas, nextQuestion } = this.state;
     const { request } = this.props;
     return (
       <div>
         <Header />
-        <Timer
+        { nextQuestion && <Timer
           addTime={ this.addTime }
           stopTimer={ stopTimer }
           showResponseAfterTime={ this.showResponseAfterTime }
-        />
+        />}
         game
 
         {request && this.renderCardQuestion()}
@@ -206,7 +213,7 @@ Game.propTypes = {
   email: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
   addPoints: PropTypes.func.isRequired,
-
+  history: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => ({
