@@ -117,7 +117,6 @@ class Game extends Component {
           gravatarEmail: email,
         },
       };
-
       localStorage.setItem('state', JSON.stringify(newState));
     }
     this.setState({ disabled: true });
