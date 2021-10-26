@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchLogin, saveTokenAction, getNameEmail } from '../redux/actions/actions';
+import '../style.css/login.css';
+import titletrivia from '../img/titletrivia.png';
 
 class Login extends React.Component {
   constructor() {
@@ -16,6 +18,7 @@ class Login extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.validateForms = this.validateForms.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.buttonSettings = this.buttonSettings.bind(this);
   }
 
   handleInputChange({ target: { name, value } }) {
@@ -44,13 +47,27 @@ class Login extends React.Component {
     localStorage.setItem('token', token);
   }
 
-  render() {
-    const { email, name } = this.state;
+  buttonSettings() {
     const { history } = this.props;
     return (
+      <button
+        className="btn-settings"
+        data-testid="btn-settings"
+        type="button"
+        onClick={ () => history.push('/settings') }
+      >
+        Configurações
+      </button>
+    );
+  }
+
+  render() {
+    const { email, name } = this.state;
+    return (
       <main className="container">
+        <img src={ titletrivia } alt="trivia-logo" className="logo-trivia" />
         <form className="form-container">
-          <div>
+          <div className="div-input">
             <input
               data-testid="input-player-name"
               type="text"
@@ -61,7 +78,7 @@ class Login extends React.Component {
             />
             <div className="underline" />
           </div>
-          <div>
+          <div className="div-input">
             <input
               data-testid="input-gravatar-email"
               type="text"
@@ -76,20 +93,14 @@ class Login extends React.Component {
             <button
               data-testid="btn-play"
               type="button"
-              className="buttonLogin"
+              className="btn-play"
               disabled={ !this.validateForms() }
               onClick={ this.handleClick }
             >
               Jogar
             </button>
           </Link>
-          <button
-            data-testid="btn-settings"
-            type="button"
-            onClick={ () => history.push('/settings') }
-          >
-            Configurações
-          </button>
+          { this.buttonSettings() }
         </form>
       </main>
     );
