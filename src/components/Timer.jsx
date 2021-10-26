@@ -52,6 +52,7 @@ class Timer extends Component {
 Timer.propTypes = {
   stopTimer: PropTypes.bool.isRequired,
   showResponseAfterTime: PropTypes.func.isRequired,
+  addTime: PropTypes.func.isRequired,
 };
 
 export default Timer;

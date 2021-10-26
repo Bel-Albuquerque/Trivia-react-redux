@@ -13,6 +13,7 @@ class Game extends Component {
       toggle: false,
       disabled: false,
       time: 0,
+      respostas: [],
     };
 
     this.renderCardQuestion = this.renderCardQuestion.bind(this);
@@ -23,9 +24,23 @@ class Game extends Component {
     this.handleLocalStorage = this.handleLocalStorage.bind(this);
   }
 
+  componentDidMount() {
+    const { name, email, score } = this.props;
+    const state = {
+      player: {
+        name,
+        assertions: 0,
+        score,
+        gravatarEmail: email,
+      },
+    };
+
+    localStorage.setItem('state', JSON.stringify(state));
+  }
+
   addTime(time) {
     this.setState({
-      time: time,
+      time,
     });
   }
 
@@ -33,62 +48,67 @@ class Game extends Component {
     this.setState({
       toggle: true,
       stopTimer: true,
-    });
-    this.calculatorPoints(target);
+    }, () => this.calculatorPoints(target));
   }
 
   calculatorPoints(target) {
     const { time, idx } = this.state;
-    const { trivia, addPoints, email } = this.props;
+    const { trivia, addPoints } = this.props;
+    const TEN = 10;
+    const hard = 3;
     const result = () => {
       switch (trivia[idx].difficulty) {
       case 'hard':
-        return 10 + (time * 3);
+        return TEN + (time * hard);
       case 'medium':
-        return 10 + (time * 2);
+        return TEN + (time * 2);
       case 'easy':
-        return 10 + (time * 1);
+        return TEN + (time * 1);
       default:
         break;
       }
     };
-    const player = JSON.parse(localStorage.getItem('player'));
+    console.log('aqui');
     if (target.className === 'correct') {
       addPoints(result());
       this.handleLocalStorage(result(), target);
     } else {
       addPoints(0);
+      this.handleLocalStorage(0, target);
     }
   }
 
   handleLocalStorage(result, target) {
     const { name, email, score } = this.props;
-
+    console.log('handle');
     if (!localStorage.getItem('state')) {
-      const player = {
-        name,
-        assertions: 0,
-        score,
-        gravatarEmail: email,
-      };
+      console.log('criando local');
       const state = {
-        player,
+        player: {
+          name,
+          assertions: 0,
+          score,
+          gravatarEmail: email,
+        },
       };
+
       localStorage.setItem('state', JSON.stringify(state));
     }
     if (target.className === 'correct') {
-      const player = JSON.parse(localStorage.getItem('player'));
-      const newPlayer = {
-        name: player.name,
-        assertions: player.assertions + 1,
-        score: result,
-        gravatarEmail: email,
+      const state = JSON.parse(localStorage.getItem('state'));
+
+      const newState = {
+        player: {
+          name: state.player.name,
+          assertions: state.player.assertions + 1,
+          score: state.player.score + result,
+          gravatarEmail: email,
+        },
       };
-      const state = {
-        player: newPlayer,
-      };
-      localStorage.setItem('state', JSON.stringify(state));
+
+      localStorage.setItem('state', JSON.stringify(newState));
     }
+    this.setState({ disabled: true });
   }
 
   showResponseAfterTime() {
@@ -140,7 +160,7 @@ class Game extends Component {
   }
 
   render() {
-    const { stopTimer } = this.state;
+    const { stopTimer, respostas } = this.state;
     const { request } = this.props;
     return (
       <div>
@@ -151,8 +171,9 @@ class Game extends Component {
           showResponseAfterTime={ this.showResponseAfterTime }
         />
         game
-        { console.log(request)}
+
         {request && this.renderCardQuestion()}
+        {request && respostas }
       </div>
     );
   }
@@ -161,6 +182,11 @@ class Game extends Component {
 Game.propTypes = {
   request: PropTypes.bool.isRequired,
   trivia: PropTypes.arrayOf(PropTypes.any).isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  addPoints: PropTypes.func.isRequired,
+
 };
 
 const mapStateToProps = (state) => ({
