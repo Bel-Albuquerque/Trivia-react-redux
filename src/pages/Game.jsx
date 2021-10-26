@@ -214,7 +214,7 @@ Game.propTypes = {
   email: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
   addPoints: PropTypes.func.isRequired,
-
+  history: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => ({
