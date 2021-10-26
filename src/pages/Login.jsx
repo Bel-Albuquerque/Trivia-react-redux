@@ -35,7 +35,7 @@ class Login extends React.Component {
   }
 
   async handleClick() {
-    const { triviaAction, saveToken, score } = this.props;
+    const { triviaAction, saveToken } = this.props;
     const urlToken = await fetch('https://opentdb.com/api_token.php?command=request');
     const response = await urlToken.json();
     const { token } = response;
