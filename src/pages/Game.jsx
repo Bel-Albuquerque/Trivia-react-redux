@@ -15,6 +15,7 @@ class Game extends Component {
       time: 0,
       respostas: [],
     };
+    // nextQuestion: false,
 
     this.renderCardQuestion = this.renderCardQuestion.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -22,6 +23,7 @@ class Game extends Component {
     this.addTime = this.addTime.bind(this);
     this.calculatorPoints = this.calculatorPoints.bind(this);
     this.handleLocalStorage = this.handleLocalStorage.bind(this);
+    this.handleNextQuestion = this.handleNextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +38,16 @@ class Game extends Component {
     };
 
     localStorage.setItem('state', JSON.stringify(state));
+  }
+
+  handleNextQuestion() {
+    const { idx } = this.state;
+    this.setState({
+      idx: idx + 1,
+      stopTimer: false,
+      toggle: false,
+      disabled: false,
+    });
   }
 
   addTime(time) {
@@ -174,6 +186,15 @@ class Game extends Component {
 
         {request && this.renderCardQuestion()}
         {request && respostas }
+        { stopTimer
+        && (
+          <button
+            type="button"
+            onClick={ this.handleNextQuestion }
+            data-testid="btn-next"
+          >
+            Próxima
+          </button>)}
       </div>
     );
   }
