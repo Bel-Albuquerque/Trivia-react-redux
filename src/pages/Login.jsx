@@ -112,4 +112,8 @@ const mapDispatchToProps = (dispatch) => ({
   getNameEmailAction: (name, email) => dispatch(getNameEmail(name, email)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapStateToProps = (state) => ({
+  score: state.game.score,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
