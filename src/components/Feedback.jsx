@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Header from './Header';
 
 class Feedback extends Component {
@@ -10,6 +11,9 @@ class Feedback extends Component {
     };
 
     this.getLocalStorage = this.getLocalStorage.bind(this);
+    this.handlePage = this.handlePage.bind(this);
+
+
   }
 
   componentDidMount() {
@@ -22,6 +26,12 @@ class Feedback extends Component {
       state,
       loading: true,
     });
+  }
+
+
+  handlePage() {
+    const { history } = this.props;
+    history.push('/');
   }
 
   render() {
@@ -38,10 +48,22 @@ class Feedback extends Component {
           && <h1 data-testid="feedback-text">Mandou bem!</h1>}
           {loading && state.player.assertions <= 2
           && <h1 data-testid="feedback-text">Podia ser melhor...</h1>}
+
+          <button
+            type="button"
+            data-testid="btn-play-again"
+            onClick={ this.handlePage }
+          >
+            Jogar novamente
+          </button>
         </main>
       </>
     );
   }
 }
+
+Feedback.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default Feedback;
