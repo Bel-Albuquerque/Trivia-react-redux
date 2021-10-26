@@ -45,13 +45,6 @@ class Login extends React.Component {
     const { name, email } = this.state;
     getNameEmailAction(name, email);
     localStorage.setItem('token', token);
-    const player = {
-      name,
-      assertions: 0,
-      score,
-      gravatarEmail: email,
-    };
-    localStorage.setItem('player', JSON.stringify(player));
   }
 
   buttonSettings() {
@@ -118,7 +111,6 @@ Login.propTypes = {
   saveToken: PropTypes.func.isRequired,
   triviaAction: PropTypes.func.isRequired,
   getNameEmailAction: PropTypes.func.isRequired,
-  score: PropTypes.func.isRequired,
   history: PropTypes.shape({
     history: PropTypes.string,
     push: PropTypes.func,
