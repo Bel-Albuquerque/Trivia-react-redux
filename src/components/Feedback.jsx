@@ -12,6 +12,8 @@ class Feedback extends Component {
 
     this.getLocalStorage = this.getLocalStorage.bind(this);
     this.handlePage = this.handlePage.bind(this);
+
+
   }
 
   componentDidMount() {
@@ -25,6 +27,7 @@ class Feedback extends Component {
       loading: true,
     });
   }
+
 
   handlePage() {
     const { history } = this.props;
@@ -45,6 +48,7 @@ class Feedback extends Component {
           && <h1 data-testid="feedback-text">Mandou bem!</h1>}
           {loading && state.player.assertions <= 2
           && <h1 data-testid="feedback-text">Podia ser melhor...</h1>}
+
           <button
             type="button"
             data-testid="btn-play-again"
