@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 class Ranking extends Component {
   constructor() {
     super();
+    
     this.getRanking = this.getRanking.bind(this);
   }
 
@@ -14,9 +15,11 @@ class Ranking extends Component {
     if (ranking.length > 0) {
       const scores = ranking.map((player) => player.score);
       const orderedScores = scores.sort((a, b) => b - a);
+      const orderedPlayers = [];
       return orderedScores.map((score, index) => {
         const filteredPlayer = ranking.filter((player) => score === player.score);
-        console.log(filteredPlayer[0]);
+        orderedPlayers.push(filteredPlayer[0]);
+        localStorage.setItem('ranking', JSON.stringify(orderedPlayers));
         return (
           <li key={ index }>
             <img
