@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchLogin, saveTokenAction, getNameEmail } from '../redux/actions/actions';
+import { fetchLogin, saveTokenAction,
+  getNameEmail, resetScore } from '../redux/actions/actions';
 import '../style.css/login.css';
 import titletrivia from '../img/titletrivia.png';
 
@@ -41,9 +42,11 @@ class Login extends React.Component {
     const { token } = response;
     saveToken(token);
     triviaAction(token);
-    const { getNameEmailAction } = this.props;
+    const { getNameEmailAction, resetScoreAction } = this.props;
     const { name, email } = this.state;
     getNameEmailAction(name, email);
+    const startScore = 0;
+    resetScoreAction(startScore);
     localStorage.setItem('token', token);
   }
 
@@ -111,6 +114,7 @@ Login.propTypes = {
   saveToken: PropTypes.func.isRequired,
   triviaAction: PropTypes.func.isRequired,
   getNameEmailAction: PropTypes.func.isRequired,
+  resetScoreAction: PropTypes.func.isRequired,
   history: PropTypes.shape({
     history: PropTypes.string,
     push: PropTypes.func,
@@ -121,6 +125,7 @@ const mapDispatchToProps = (dispatch) => ({
   saveToken: (token) => dispatch(saveTokenAction(token)),
   triviaAction: (token) => dispatch(fetchLogin(token)),
   getNameEmailAction: (name, email) => dispatch(getNameEmail(name, email)),
+  resetScoreAction: (score) => dispatch(resetScore(score)),
 });
 
 const mapStateToProps = (state) => ({
