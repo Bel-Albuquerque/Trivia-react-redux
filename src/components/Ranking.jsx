@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 class Ranking extends Component {
   constructor() {
     super();
-    
     this.getRanking = this.getRanking.bind(this);
   }
 
