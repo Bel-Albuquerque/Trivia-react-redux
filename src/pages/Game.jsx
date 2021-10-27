@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
 import { addScoreAction } from '../redux/actions/actions';
@@ -36,16 +37,28 @@ class Game extends Component {
         gravatarEmail: email,
       },
     };
-
     localStorage.setItem('state', JSON.stringify(state));
+    if (!localStorage.getItem('ranking')) {
+      const ranking = [];
+      localStorage.setItem('ranking', JSON.stringify(ranking));
+    }
   }
 
   handleNextQuestion() {
+    const { name, email, score } = this.props;
     const MAX_ARRAY = 4;
     const { idx } = this.state;
     const { history } = this.props;
 
     if (idx === MAX_ARRAY) {
+      const ranking = JSON.parse(localStorage.getItem('ranking'));
+      const rankingPlayer = {
+        name,
+        score,
+        picture: `https://www.gravatar.com/avatar/${md5(email).toString()}`,
+      };
+      const newRanking = [...ranking, rankingPlayer];
+      localStorage.setItem('ranking', JSON.stringify(newRanking));
       return history.push('/feedback');
     }
     this.setState({ nextQuestion: false });

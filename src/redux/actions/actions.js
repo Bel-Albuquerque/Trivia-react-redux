@@ -2,6 +2,7 @@ export const ACTION_LOGIN = 'ACTION_LOGIN';
 export const SAVE_TOKEN = 'SAVE_TOKEN';
 export const GET_NAME_EMAIL = 'GET_NAME_EMAIL';
 export const ADD_SCORE = 'ADD_SCORE';
+export const RESET_SCORE = 'RESET_SCORE';
 
 export const triviaGameAction = (json) => ({
   type: ACTION_LOGIN,
@@ -25,5 +26,10 @@ export const getNameEmail = (name, email) => ({
 
 export const addScoreAction = (score) => ({
   type: ADD_SCORE,
+  score,
+});
+
+export const resetScore = (score) => ({
+  type: RESET_SCORE,
   score,
 });
