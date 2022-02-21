@@ -1,7 +1,7 @@
 # Trivia-react-redux
 
 --------
-## Projeto em grupo, realizado no módulo de fundamentos
+## Projeto em grupo, realizado no módulo de front-end
 
 
 grupo: [Bel Albuquerque](https://github.com/Bel-Albuquerque), [Bruno Trindade](https://github.com/btrndd), [Raphael O. Canindé](https://github.com/raphael-caninde) e [Vitor Lima](https://github.com/Vitorlima02)
